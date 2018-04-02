@@ -1,0 +1,8 @@
+// Trying to use an uninitialized variable in a function results in an error
+
+int x;
+int f(int z) begin
+    return z+1;
+end;
+
+int z = f(x);

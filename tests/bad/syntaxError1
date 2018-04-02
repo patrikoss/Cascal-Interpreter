@@ -1,0 +1,2 @@
+// each instruction (block, function, declaration) must end with a semicolon!
+int x = 5

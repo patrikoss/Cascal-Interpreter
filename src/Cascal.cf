@@ -1,0 +1,109 @@
+-- Comments 
+comment "//" ;
+comment "/*" "*/" ;
+
+token Boolean ( {"true"} | {"false"} ) ;
+
+-- when calling a function we specify a sequence of Identifiers separated by a coma
+[]     . [Param] ::= ;
+(:[])  . [Param] ::= Param ;
+(:)    . [Param] ::= Param "," [Param] ;
+
+-- Multiple expressions:
+[]    . [Exp] ::= ;
+(:[]) . [Exp] ::= Exp ;
+(:)   . [Exp] ::= Exp "," [Exp] ;
+
+-- Multiple instructions
+[]    . [Instr] ::= ;
+--(:[]) . [Instr] ::= Instr ";" ;
+(:)   . [Instr] ::= Instr ";" [Instr] ;
+
+-- Multiple types
+[]    . [Type] ::= ;
+(:[]) . [Type] ::= Type ;
+(:)   . [Type] ::= Type "," [Type] ;
+
+-- Types 
+TInt   . Type ::= "int"   ;
+TBool  . Type ::= "bool"  ;
+TString. Type ::= "string";
+TFun   . Type ::= Type "(" [Type] ")";
+
+-- Expressions 
+EOr    . Exp2 ::= Exp2 "||" Exp3;
+EAnd   . Exp3 ::= Exp3 "&&" Exp4;
+EEq    . Exp4 ::= Exp4 "==" Exp5;
+ENeq   . Exp4 ::= Exp4 "!=" Exp5;
+ELt    . Exp5 ::= Exp5 "<" Exp6;
+EGt    . Exp5 ::= Exp5 ">" Exp6;
+ELe    . Exp5 ::= Exp5 "<=" Exp6;
+EGe    . Exp5 ::= Exp5 ">=" Exp6;
+EAdd   . Exp6 ::= Exp6 "+" Exp7 ;
+EMinus . Exp6 ::= Exp6 "-" Exp7 ;
+EMul   . Exp7 ::= Exp7 "*" Exp8 ;
+EDiv   . Exp7 ::= Exp7 "/" Exp8 ;
+ENot   . Exp8 ::= "!" Exp9;
+ENeg   . Exp8 ::= "-" Exp9;
+
+ELamFun. Exp9 ::= "lambda" Type "\\" "(" [Param] ")" Body;
+ELamApp. Exp10 ::= "apply" Exp "to" "(" [Exp] ")" "endapply";
+
+EPreInc . Exp11 ::= "++" Ident;
+EPreDec . Exp11 ::= "--" Ident;
+EPostInc. Exp11 ::= Ident "++";
+EPostDec. Exp11 ::= Ident "--";
+
+EIdent . Exp12 ::= Ident;
+EInt   . Exp12 ::= Integer;
+EBool  . Exp12 ::= Boolean;
+EString. Exp12 ::= String;
+ECall  . Exp12 ::= Ident "(" [Exp] ")" ;
+EStrToInt. Exp12 ::= "strToInt" "(" Exp ")";
+EIntToStr. Exp12 ::= "intToStr" "(" Exp ")";
+
+coercions Exp 12;
+
+LhsIdent . Lhs ::= Ident;
+
+-- Instructions
+InstrDecl  . Instr ::= Decl;
+InstrStmt  . Instr ::= Stmt;
+InstrBlock . Instr ::= "begin" [Instr] "end";
+
+-- Body of the function
+FuncBody   . Body ::=  "begin" [Instr] "return" Exp ";" "end";
+
+-- Statements
+SPass  . Stmt ::= "pass";
+SAssign. Stmt ::= Lhs AssignOp Exp;
+SIf    . Stmt ::= "if" "(" Exp ")" "then" Instr ";" "endif";
+SIfElse. Stmt ::= "if" "(" Exp ")" "then" Instr ";" "else" Instr ";" "endif";
+SWhile . Stmt ::= "while" "(" Exp ")" "do" Instr ";" "endwhile";
+SForTo    . Stmt ::= "for" Lhs "=" Exp "to" Exp "do" Instr ";" "endfor";
+SForDownTo. Stmt ::= "for" Lhs "=" Exp "downto" Exp "do" Instr ";" "endfor";
+SPrint . Stmt ::= "print" "(" Exp ")";
+
+-- Assignment Operations:
+Assign     . AssignOp ::= "=";
+AssignAdd  . AssignOp ::= "+=";
+AssignSub  . AssignOp ::= "-=";
+AssignMul  . AssignOp ::= "*=";
+AssignDiv  . AssignOp ::= "/=";
+AssignAnd  . AssignOp ::= "&=";
+AssignOr   . AssignOp ::= "|=";
+
+-- Declarations 
+DeclAny  .  Decl ::= Type Ident;
+DeclInit .  Decl ::= Type Ident "=" Exp;
+DeclFunc .  Decl ::= Type Ident "(" [Param] ")" Body; 
+
+
+-- Parameters in definition of a function
+ParamDecl . Param ::= Type Ident;
+
+-- starting point
+Prog. Program ::= [Instr];
+entrypoints Program ;
+
+

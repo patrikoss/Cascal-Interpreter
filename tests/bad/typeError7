@@ -1,0 +1,3 @@
+// Expression type mismatch errors 
+//(may throw either DistinctExpressionTypeException or UnallowedTypeException)
+int z = false + 2;

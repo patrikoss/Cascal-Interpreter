@@ -1,0 +1,3 @@
+// If we try to use the built-in function converting string to int and we find
+// that the string is a non-int we also get an error
+int x = strToInt("-12.334");

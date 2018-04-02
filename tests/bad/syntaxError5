@@ -1,0 +1,8 @@
+// for loops must end with "endfor;"
+// while loops must end with "endwhile;"
+// ifs must end with "ednif;"
+int x = 5;
+while (x > 1) do begin
+    x = x-1;
+end;
+//endwhile;

@@ -1,0 +1,118 @@
+// Single line comment
+/* 
+   Multi
+   line
+   comment
+*/
+
+bool fastCheck(bool b) begin
+    if(b) then
+        print("Good!");
+    else
+        print("Bad!");
+    endif;
+    return b;
+end;
+
+bool dummy;
+
+// Assignment
+int x;
+x = 1;
+
+// Basic arithmetic expressions
+x = x*2;
+dummy = fastCheck(x==2);
+
+x = x/2;
+dummy = fastCheck(x==1);
+
+// division with no remainder
+dummy = fastCheck(100/9 == 11);
+
+x=1;
+dummy = fastCheck(x==1);
+dummy = fastCheck(x < 100);
+dummy = fastCheck(x <= 100);
+dummy = fastCheck(x > 0);
+dummy = fastCheck (x >= 0);
+dummy = fastCheck(x != 100);
+dummy = fastCheck(x == 1);
+
+x = x - 10;
+dummy = fastCheck(x==-9);
+
+x = x * (-1);
+dummy = fastCheck(x == 9);
+
+while (x >= 1) do x = x-1; endwhile;
+dummy = fastCheck(x==0);
+
+while (x <= 9) do begin
+    x = x+1;
+    pass;
+end;
+endwhile;
+dummy = fastCheck(x == 10);
+
+x = x + x*4;
+dummy = fastCheck(x == 50);
+
+x = 2 * (x + 10);
+dummy = fastCheck(x==120);
+
+// Boolean expressions
+bool b1 = true;
+bool b2 = false;
+dummy = fastCheck(b1 || b2);
+dummy = fastCheck(b1 && !b2);
+dummy = fastCheck(b1 != b2);
+dummy = fastCheck(b1 == !b2);
+
+//string expressions
+string s1 = "abc";
+string s2 = "abd";
+dummy = fastCheck(s1 != s2);
+dummy = fastCheck(s1 < s2);
+dummy = fastCheck("abc" == s1);
+
+// Built-in functions converting between string and int
+int y = strToInt("-12345");
+string z = intToStr(-12345);
+
+dummy = fastCheck(y == -12345);
+dummy = fastCheck(z == "-12345");
+dummy = fastCheck( (strToInt(z) == -12345) );
+dummy = fastCheck( (intToStr(y) == "-12345") );
+dummy = fastCheck( -12345 == strToInt(intToStr(-12345)) );
+
+// for loop. 
+int x;
+int sum = 0;
+for x = 1 to 100 do begin
+    sum = sum + x;
+end;
+endfor;
+dummy = fastCheck(sum == (100+1)*100/2);
+
+// if you change the iterator value inside the for loop it doesn't have an
+// impact on the number of iterations the loop will perform since this number
+// is calculated only once
+int x;
+int sum = 0;
+for x = 1 to 100 do begin
+    x = 100-x+1;
+    sum = sum + x;
+end;
+endfor;
+dummy = fastCheck(sum == (100+1)*100/2);
+
+//there is also a for loop that works the same but counts downwards
+int x;
+int sum = 0;
+for x = 100 downto 1 do begin
+    sum = sum + x;
+end;
+endfor;
+dummy = fastCheck(sum == (100+1)*100/2);
+

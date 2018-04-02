@@ -1,0 +1,64 @@
+bool dummy;
+int dummyInt;
+
+bool fastCheck(bool b) begin
+    if(b) then
+        print("Good!");
+    else
+        print("Bad!");
+    endif;
+    return b;
+end;
+
+int x = 4;
+dummyInt = x++;
+
+dummy = fastCheck(x == 5);
+
+dummyInt = --x;
+dummy = fastCheck(x==4);
+
+dummy = fastCheck(x++ == 4);
+dummy = fastCheck(x==5);
+
+dummy = fastCheck(--x==4);
+
+x += 6;
+dummy = fastCheck(x == 10);
+
+x *= 2;
+dummy = fastCheck(x == 20);
+
+x /= 3;
+dummy = fastCheck(x==6);
+
+x -= 1;
+dummy = fastCheck(x == 5);
+
+bool y = true;
+y &= true;
+dummy = fastCheck(y==true);
+
+y |= true;
+dummy = fastCheck(y==true);
+
+y &= false;
+dummy = fastCheck(y==false);
+
+y |= true;
+dummy = fastCheck(y==true);
+
+
+/*
+BAD:
+int x;
+
+x++++;
+(x++)++;
+
+bool y;
+y++;
+y += 1;
+
+*/
+

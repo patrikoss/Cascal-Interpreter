@@ -1,0 +1,118 @@
+bool fastCheck(bool b) begin
+    if(b) then
+        print("Good!");
+    else
+        print("Bad!");
+    endif;
+    return b;
+end;
+
+bool dummy;
+
+// You can redeclare variables within the same scope
+int x;
+x = 5;
+dummy = fastCheck(x == 5);
+string x;
+x = "asd";
+dummy = fastCheck(x == "asd");
+
+// You can redeclare variables inside the blocks. They become local variables
+int x = 5;
+begin
+    int x = 4;
+    dummy = fastCheck(x == 4);
+end;
+dummy = fastCheck(x == 5);
+
+// Same goes for parameters inside functions. They are passed by value
+int failModify(int x) begin
+    x = x+1;
+    return x;
+end;
+
+int oldx = 10;
+int newx = failModify(oldx);
+dummy = fastCheck(oldx == 10);
+dummy = fastCheck(newx == 11);
+
+// You can also pass functions as parameters
+int add1(int x) begin
+    return x+1;
+end;
+
+int addNumbersPlusOne(int x, int y, int(int) fun) begin
+    return x+fun(y);
+end;
+dummy = fastCheck( addNumbersPlusOne(4,5, add1) == 10);
+
+// You can pass lambdas as arguments
+int z = addNumbersPlusOne(4,5, lambda int \(int x) begin return x+1; end);
+dummy = fastCheck( z==10 );
+
+// A function can return another function. In that case it takes a snapshot
+// of the environment that the returning function could access(closure)
+int() funGenerator() begin
+    int counter = 0;
+    return (lambda int \() begin counter = counter+1; return counter; end);
+end;
+
+int() counter1Fun = funGenerator();
+int() counter2Fun = funGenerator();
+dummy = fastCheck(counter1Fun() == 1);
+dummy = fastCheck(counter1Fun() == 2);
+dummy = fastCheck(counter1Fun() == 3);
+dummy = fastCheck(counter2Fun() == 1);
+
+// we can also apply a lamda function like so
+int s = 1;
+int z = apply (lambda int \(int x) begin return x+1; end) to (s) endapply;
+dummy = fastCheck(z == 2);
+
+// we can define functions inside functions inside functions ...
+int maxSquared(int a1, int a2) begin
+    // functions can be anywhere inside the function ...
+    int dummyVariable;
+    int max(int r1, int r2) begin
+        bool greaterThan(int p1, int p2) begin
+            bool result = false;
+            if(p1 <= p2) then result = false;
+            else result = true; endif;
+            return result;
+        end;
+        int res;
+        if (greaterThan(r1,r2)) then res = r1; else res = r2; endif;
+        return res;
+    end;
+    int m = max(a1,a2);
+    return m*m;
+end;
+
+int a = 5;
+int b = 7;
+dummy = fastCheck( maxSquared(a,b) == 49 );
+
+// The cool functionality is that since a function is just a variable, you can
+// redeclare a function within the same scope when you don't need it anymore
+
+int sum(int x, int y) begin
+    return x + y;
+end;
+
+dummy = fastCheck(sum(5,10) == 15 );
+
+// Ok lets say we dont need a function that sums up 2 number anymore, but we
+// need one that sums up 3. We can just overwrite the sum function!
+
+int sum(int x, int y, int z) begin
+    return x+y+z;
+end; 
+
+dummy = fastCheck(sum(1,2,3) == 6);
+
+// The only functions that you can overwrite are the 2 built in function
+// strToInt and intToStr
+
+/*int strToInt(string x) begin   // <---- can't do that
+    return 4;
+end;*/

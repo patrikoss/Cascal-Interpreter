@@ -1,0 +1,2 @@
+// division by zero error
+int x = 5/0;

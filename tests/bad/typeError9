@@ -1,0 +1,3 @@
+// if we try to call on a non-function variable we get an exception
+int f;
+int z = f();

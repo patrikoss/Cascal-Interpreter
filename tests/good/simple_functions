@@ -1,0 +1,51 @@
+// functions have to end with a single return statement at the end
+// of a function
+
+bool fastCheck(bool b) begin
+    if(b) then
+        print("Good!");
+    else
+        print("Bad!");
+    endif;
+    return b;
+end;
+
+bool dummy;
+
+
+// recurrence
+int factorial(int n) begin
+    int result;
+    if(n == 0) then result = 1;
+    else result = n* factorial(n-1);
+    endif;
+    return result; 
+end;
+
+int f5 = factorial(5);
+dummy = fastCheck(f5 == 120);
+dummy = fastCheck(f5 != 24);
+
+
+
+// passing argument by value
+int add1(int n) begin
+    n = n + 1;
+    return n;
+end;
+
+int x1 = 5;
+int x2 = add1(x1);
+dummy = fastCheck(x1==5);
+dummy = fastCheck(x2==6);
+
+
+// Built-in functions converting between string and int
+int y = strToInt("-12345");
+string z = intToStr(-12345);
+
+dummy = fastCheck(y == -12345);
+dummy = fastCheck(z == "-12345");
+dummy = fastCheck( (strToInt(z) == -12345) );
+dummy = fastCheck( (intToStr(y) == "-12345") );
+dummy = fastCheck( -12345 == strToInt(intToStr(-12345)) );

@@ -1,0 +1,5 @@
+// parameters must be separated by a coma : ","
+int fun(int x; int y) begin
+
+    return x + y;
+end;

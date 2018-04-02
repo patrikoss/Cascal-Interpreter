@@ -1,0 +1,2 @@
+// Assignment or calculation of expression with undeclared variable
+int z = 5 + 34 * x;

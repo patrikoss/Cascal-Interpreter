@@ -1,0 +1,3 @@
+// assignment between two different types
+int x;
+x = false;

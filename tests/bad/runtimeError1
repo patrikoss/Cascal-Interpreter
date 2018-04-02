@@ -1,0 +1,4 @@
+// Trying to use an uninitialized variable results in an error
+
+int x;
+int z = x;

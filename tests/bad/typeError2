@@ -1,0 +1,4 @@
+// collision of parameter names inside function
+int fun(int x, bool x) begin
+    return 5;
+end;

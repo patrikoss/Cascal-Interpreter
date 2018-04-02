@@ -1,0 +1,2 @@
+// trying to call a function that does not exist
+int z = f();

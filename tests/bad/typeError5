@@ -1,0 +1,6 @@
+// Calling a function with wrong parameter types
+int add1(int x) begin
+    return x+1;
+end;
+
+int z = add1(true);
