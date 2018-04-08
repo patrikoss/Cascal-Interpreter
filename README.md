@@ -1,4 +1,4 @@
-# Interpreter
+# Cascal-Interpreter
 This is an interpreter for a custom programming language Cascal written in
 Haskell.
 
@@ -21,14 +21,14 @@ or if you want to read the program from standard input
 ```
 
 ## Files
-```
-src/
-    Cascal.cf - grammar for the language in ebnf format
-    Validator.hs - static type checker of the program
-    Interpreter.hs - the actual interpreter executing code of the program
-    Makefile - builds the interpreter
-    Main.hs - reads the program description and starts type checker and interpreter
-```
+
+* src/
+  - Cascal.cf - grammar for the language in ebnf format
+  - Validator.hs - static type checker of the program
+  - Interpreter.hs - the actual interpreter executing code of the program
+  - Makefile - builds the interpreter
+  - Main.hs - reads the program description and starts type checker and interpreter
+
    
 ## Language specification:
 The language contains among other things, the following:
